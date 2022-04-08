@@ -2,12 +2,12 @@ package org.ldclrcq.infrastructure.out.persistence.adapter;
 
 import org.ldclrcq.application.port.out.GardenRepository;
 import org.ldclrcq.domain.Garden;
-import org.ldclrcq.infrastructure.out.persistence.entity.GardenEntity;
 import org.ldclrcq.infrastructure.out.persistence.mapper.GardenMapper;
 import org.ldclrcq.infrastructure.out.persistence.panache.GardenPanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Optional;
 
 @ApplicationScoped
 public class GardenRepositoryAdapter implements GardenRepository {
@@ -25,6 +25,12 @@ public class GardenRepositoryAdapter implements GardenRepository {
         final var entity = mapper.toEntity(garden);
         panacheRepository.persist(entity);
         return mapper.toDomain(entity);
+    }
+
+    @Override
+    public Optional<Garden> findById(Long id) {
+        return panacheRepository.findByIdOptional(id)
+                .map(mapper::toDomain);
     }
 
 }

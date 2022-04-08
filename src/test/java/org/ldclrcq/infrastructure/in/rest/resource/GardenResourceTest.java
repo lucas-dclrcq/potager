@@ -1,5 +1,6 @@
 package org.ldclrcq.infrastructure.in.rest.resource;
 
+import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -18,6 +19,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 class GardenResourceTest {
 
     @Test
+    @TestTransaction
     void given_valid_dto_should_create_garden() {
         // ARRANGE
         final var createGardenDTO = new CreateGardenDTO("My beautiful garden", 2L, 3L);
@@ -39,6 +41,7 @@ class GardenResourceTest {
     }
 
     @Test
+    @TestTransaction
     void given_width_is_null_should_not_create_garden() {
         // ARRANGE
         final var createGardenDTO = new CreateGardenDTO("My beautiful garden", null, 3L);
@@ -56,6 +59,7 @@ class GardenResourceTest {
     }
 
     @Test
+    @TestTransaction
     void given_width_is_0_should_not_create_garden() {
         // ARRANGE
         final var createGardenDTO = new CreateGardenDTO("My beautiful garden", 0L, 3L);
@@ -73,6 +77,7 @@ class GardenResourceTest {
     }
 
     @Test
+    @TestTransaction
     void given_height_is_null_should_not_create_garden() {
         // ARRANGE
         final var createGardenDTO = new CreateGardenDTO("My beautiful garden", 2L, null);
@@ -90,6 +95,7 @@ class GardenResourceTest {
     }
 
     @Test
+    @TestTransaction
     void given_height_is_0_should_not_create_garden() {
         // ARRANGE
         final var createGardenDTO = new CreateGardenDTO("My beautiful garden", 2L, 0L);
@@ -104,5 +110,37 @@ class GardenResourceTest {
         // ASSERT
         response
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
+    void given_known_id_should_return_garden() {
+        // ARRANGE
+        final var id = 999L;
+
+        // ACT
+        final var response = given()
+                .pathParam("gardenId", id)
+                .when().get("/gardens/{gardenId}")
+                .then();
+
+        // ASSERT
+        response
+                .statusCode(200);
+    }
+
+    @Test
+    void given_unknown_id_should_return_error() {
+        // ARRANGE
+        final var id = 1L;
+
+        // ACT
+        final var response = given()
+                .pathParam("gardenId", id)
+                .when().get("/gardens/{gardenId}")
+                .then();
+
+        // ASSERT
+        response
+                .statusCode(404);
     }
 }
