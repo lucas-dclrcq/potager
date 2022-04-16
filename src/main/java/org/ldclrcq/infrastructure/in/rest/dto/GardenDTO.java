@@ -1,4 +1,6 @@
 package org.ldclrcq.infrastructure.in.rest.dto;
 
-public record GardenDTO(Long id, String name, Long height, Long width) {
+import java.util.List;
+
+public record GardenDTO(Long id, String ownerId, String name, Long height, Long width, List<SquareRowDTO> rows) {
 }

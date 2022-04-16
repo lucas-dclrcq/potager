@@ -4,5 +4,5 @@ import org.ldclrcq.domain.Garden;
 import org.ldclrcq.domain.exception.NotFoundException;
 
 public interface FetchGarden {
-    Garden execute(Long gardenId) throws NotFoundException;
+    Garden execute(String ownerId) throws NotFoundException;
 }

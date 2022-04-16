@@ -1,6 +1,7 @@
 package org.ldclrcq.infrastructure.out.persistence.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import org.ldclrcq.domain.SquareType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +18,7 @@ public class SquareEntity extends PanacheEntity {
     @OneToMany(mappedBy = "square")
     public List<PlantationEntity> plantation;
 
-    @ManyToOne
-    @JoinColumn(name = "garden_id")
-    public GardenEntity garden;
+    @Column(name = "type", columnDefinition = "VARCHAR(20)")
+    @Enumerated(EnumType.STRING)
+    public SquareType type;
 }

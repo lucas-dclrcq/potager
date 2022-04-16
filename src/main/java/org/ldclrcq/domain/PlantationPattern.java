@@ -2,7 +2,7 @@ package org.ldclrcq.domain;
 
 public enum PlantationPattern {
     ONE,
-    THREE,
+    FOUR,
     FIVE,
     NINE,
     SIXTEEN,

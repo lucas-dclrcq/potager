@@ -8,4 +8,6 @@ public interface GardenRepository {
     Garden create(Garden garden);
 
     Optional<Garden> findById(Long id);
+
+    Optional<Garden> findForOwner(String ownerId);
 }

@@ -5,7 +5,7 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link  class="navbar-item" to="/">
-        <img src="public/logo.png">
+        <img src="/logo.png">
       </router-link>
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -31,13 +31,9 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-primary">
-              <strong>Create</strong>
-            </a>
-          </div>
-        </div>
+        <p class="navbar-item">
+          {{this.$keycloak.fullName}}
+        </p>
       </div>
     </div>
   </nav>

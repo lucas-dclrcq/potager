@@ -7,6 +7,7 @@ import org.ldclrcq.domain.exception.NotFoundException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Optional;
 
 @ApplicationScoped
 public class FetchGardenUsecase implements FetchGarden {
@@ -18,8 +19,9 @@ public class FetchGardenUsecase implements FetchGarden {
     }
 
     @Override
-    public Garden execute(Long gardenId) throws NotFoundException {
-        return gardenRepository.findById(gardenId)
-                .orElseThrow(() -> new NotFoundException(Garden.class, gardenId.toString()));
+    public Garden execute(String ownerId) throws NotFoundException {
+        final var forOwner = gardenRepository.findForOwner(ownerId);
+        return forOwner
+                .orElseThrow(() -> new NotFoundException(Garden.class, ownerId));
     }
 }

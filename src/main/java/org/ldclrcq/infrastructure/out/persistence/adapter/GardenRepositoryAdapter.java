@@ -23,13 +23,20 @@ public class GardenRepositoryAdapter implements GardenRepository {
     @Override
     public Garden create(Garden garden) {
         final var entity = mapper.toEntity(garden);
-        panacheRepository.persist(entity);
+        panacheRepository.persistAndFlush(entity);
         return mapper.toDomain(entity);
     }
 
     @Override
     public Optional<Garden> findById(Long id) {
         return panacheRepository.findByIdOptional(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Optional<Garden> findForOwner(String ownerId) {
+        return panacheRepository.find("ownerId", ownerId)
+                .firstResultOptional()
                 .map(mapper::toDomain);
     }
 

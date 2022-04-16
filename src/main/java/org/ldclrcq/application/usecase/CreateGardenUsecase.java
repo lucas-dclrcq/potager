@@ -10,6 +10,8 @@ import javax.inject.Inject;
 
 @ApplicationScoped
 public class CreateGardenUsecase implements CreateGarden {
+    private final static Logger LOG = Logger.getLogger(CreateGardenUsecase.class);
+
     private final GardenRepository gardenRepository;
 
     @Inject
@@ -19,6 +21,9 @@ public class CreateGardenUsecase implements CreateGarden {
 
     @Override
     public Garden execute(Garden garden) {
-        return gardenRepository.create(garden);
+        garden.createSquares();
+        final var createdGarden = gardenRepository.create(garden);
+        LOG.infof("Created garden with id %s for user %s", createdGarden.getId(), createdGarden.getOwnerId());
+        return createdGarden;
     }
 }

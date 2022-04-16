@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Garden from "@/components/garden/Garden.vue";
+import CreateGarden from "@/components/garden/CreateGarden.vue";
 import Journal from "@/components/journal/Journal.vue";
 import Plants from "@/components/plants/Plants.vue";
 
@@ -10,6 +11,11 @@ const router = createRouter({
       path: "/",
       name: "Garden",
       component: Garden,
+    },
+    {
+      path: "/create",
+      name: "Create Garden",
+      component: CreateGarden
     },
     {
       path: "/journal",
