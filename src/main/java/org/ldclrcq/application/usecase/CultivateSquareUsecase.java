@@ -25,7 +25,7 @@ public class CultivateSquareUsecase implements CultivateSquare {
         final var square = squareRepository.findByIdAndOwner(squareId, ownerId)
                 .orElseThrow(() -> new NotFoundException(Square.class, squareId.toString()));
 
-        LOG.infof("Setting square %d as CULTIVATED", squareId);
+        LOG.infof("Setting square %d in garden %d as CULTIVATED", squareId, square.getGardenId());
 
         square.setType(SquareType.CULTIVATED);
 

@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  app:
+    image: ghcr.io/ldclrcq/potager:1.0-SNAPSHOT
+    ports:
+      - 8080:8080
+
+  auth:
+    image: quay.io/keycloak/keycloak:17.0.1
+    ports:
+      - 8180:8080
+
+  database:
+    image: postgres
+    ports:
+      - 5432:5432

@@ -10,7 +10,7 @@
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <failsafe.useModulePath>false</failsafe.useModulePath>
-        <maven.compiler.release>18</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
@@ -79,6 +79,18 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-container-image-jib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-kubernetes</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-smallrye-health</artifactId>
+        </dependency>
 
         <!-- Tooling -->
         <dependency>
@@ -110,6 +122,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -128,6 +141,21 @@
                             <arguments>
                                 <argument>run</argument>
                                 <argument>dev</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-build</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>npm</executable>
+                            <async>true</async>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
                             </arguments>
                             <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                         </configuration>
@@ -175,16 +203,9 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>18</source>
-                    <target>18</target>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+
     <profiles>
         <profile>
             <id>native</id>

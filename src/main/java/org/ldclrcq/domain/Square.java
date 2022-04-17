@@ -7,6 +7,9 @@ public class Square implements Comparable<Square> {
     private Long id;
     private Long positionX;
     private Long positionY;
+
+    private Long gardenId;
+
     private List<Plantation> plantation;
     private SquareType type;
     public Square(Long id, Long positionX, Long positionY, List<Plantation> plantation, SquareType type) {
@@ -26,6 +29,14 @@ public class Square implements Comparable<Square> {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getGardenId() {
+        return gardenId;
+    }
+
+    public void setGardenId(Long gardenId) {
+        this.gardenId = gardenId;
     }
 
     public Long getPositionX() {

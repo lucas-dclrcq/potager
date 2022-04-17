@@ -2,7 +2,7 @@
   <div class="dropdown is-hoverable">
     <div class="dropdown-trigger">
       <div class="garden-square" :class="{'garden-square-cultivated': square.type === 'CULTIVATED'}" aria-haspopup="true" aria-controls="dropdown-menu2">
-         {{ square.type }}
+         ({{ x }}, {{ y }})
       </div>
     </div>
     <div class="dropdown-menu square-menu" id="dropdown-menu2" role="menu">
@@ -11,32 +11,28 @@
           <p>{{square.id}}</p>
         </div>
         <hr class="dropdown-divider"/>
-        <div class="dropdown-item">
-          <div class="select">
-            <select v-model="this.$props.square.type">
-              <option>EMPTY</option>
-              <option>CULTIVATED</option>
-            </select>
-          </div>
+        <div v-if="square.type === 'EMPTY'" class="dropdown-item">
+          <button @click="cultivate()" class="button is-success">Cultivate</button>
         </div>
-        <hr class="dropdown-divider"/>
-        <p class="dropdown-item">
-          ttt ttt ttt
-        </p>
-        <hr class="dropdown-divider">
-        <a href="#" class="dropdown-item">
-          <button class="button is-success">Save changes</button>
-          <button class="button">Cancel</button>
-        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'Square',
-  props: ['square', 'x', 'y']
+  props: ['square', 'x', 'y'],
+  methods: {
+    cultivate() {
+      console.log("Cultivating square " + this.square.id)
+      axios.post("http://localhost:8080/squares/" + this.square.id + "/cultivate")
+          .then(res => this.$props.square.type = 'CULTIVATED')
+          .catch(err => console.error("Could not cultivate square"));
+    }
+  }
 }
 </script>
 
@@ -51,13 +47,6 @@ export default {
   border: 1px dotted black;
   margin-left: -1px;
   margin-top: -1px;
-}
-
-.square-menu {
-}
-
-.garden-square-empty {
-  background: transparent;
 }
 
 .garden-square-cultivated {
